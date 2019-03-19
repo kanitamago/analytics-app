@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}
+処理結果
+{% endblock %}
+<!--メイン領域-->
+{% block body %}
+  <div class="info table-responsive">
+    <img class="title" src="{{ url_for('static', filename='images/size.png') }}" alt="データサイズ">
+    <span class="size">行数: {{ size[0] }}</span><span class="size"> 列数: {{ size[1] }}</span>
+  </div>
+  <div class="info table-responsive">
+    <img class="title" src="{{ url_for('static', filename='images/colname.png') }}" alt="コラム名">
+    {% for col in colname %}
+      <p class="col">{{ col }}</p>
+    {% endfor %}
+  </div>
+  <div class="info table-responsive">
+    <img class="title" src="{{ url_for('static', filename='images/head.png') }}" alt="先頭行">
+    {{ head | safe }}
+  </div>
+  <div class="info table-responsive">
+    <img class="title" src="{{ url_for('static', filename='images/description.png') }}" alt="基本情報">
+    {{ describe | safe }}
+  </div>
+  <div class="graph-area">
+    <form class="form-horizontal" action="{{ url_for('show_hist') }}" method="post">
+      <div class="select-col-area form-group">
+        <div class="select-area">
+          <select class="form-control" id="hist-col" name="hist-col">
+            {% for col in colname %}
+              <option value={{ col }}>{{ col }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button class="btn btn-dark select-btn ml-2" type="submit" name="button">ヒストグラムを作成</button>
+      </div>
+      <div class="btn-area text-center">
+        <button id="hist-btn" class="btn btn-danger mb-3" type="button" name="button">ヒストグラムを表示</button>
+      </div>
+      <div class="image-area text-center">
+        <img id="hist-image" src={{ hist_url }}>
+      </div>
+    </form>
+  </div>
+  <div class="info table-responsive">
+    <img class="title" src="{{ url_for('static', filename='images/correration.png') }}" alt="相関係数">
+    {{ corr | safe }}
+  </div>
+  <div class="graph-area">
+    <div class="btn-area text-center">
+      <button id="heat-btn" class="btn btn-danger mb-3" type="button" name="button">ヒートマップを表示</button>
+    </div>
+    <div class="image-area text-center">
+      <img id="heat-image" src={{ btn_path }}>
+    </div>
+  </div>
+  <div class="info">
+    <img class="title" src="{{ url_for('static', filename='images/scatter.png') }}" alt="散布図">
+    <div class="graph-area">
+      <form class="form-horizontal" action="{{ url_for('show_scatter') }}" method="post">
+        <div class="select-col-area form-group">
+          <div class="select-area">
+            <label for="scatter-xcol">X軸</label>
+            <select class="form-control" id="scatter-xcol" name="scatter-xcol">
+              {% for col in colname %}
+                <option value={{ col }}>{{ col }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="select-area mt-3">
+            <label for="scatter-ycol">Y軸</label>
+            <select class="form-control" id="scatter-ycol" name="scatter-ycol">
+              {% for col in colname %}
+                <option value={{ col }}>{{ col }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="btn-area text-center mt-3">
+            <button class="btn btn-dark select-btn" type="submit" name="button">散布図を作成</button>
+          </div>
+        </div>
+        <div class="btn-area text-center">
+          <button id="scatter-btn" class="btn btn-danger mb-3" type="button" name="button">散布図を表示</button>
+        </div>
+        <div class="image-area text-center">
+          <img id="scatter-image" src={{ scatter_url }}>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="info table-responsive">
+    <img class="title" src="{{ url_for('static', filename='images/isnull.png') }}" alt="欠損値">
+    {{ isnull | safe }}
+  </div>
+  <div class="info">
+    <h3>CODE</h3>
+    <div class="code">
+      {{ res_code | safe }}
+    </div>
+  </div>
+{% endblock %}

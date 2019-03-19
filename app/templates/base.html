@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %} | 簡易データ確認アプリ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href ="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="description">
+        <h2 id="main-title"><a href="{{ url_for('index') }}">簡易データ確認アプリ</a></h2>
+        <div class="app-info">
+          <ol id="process">
+            <li>CSVファイルを選択</li>
+            <li>取得ボタンをクリック</li>
+            <li><strong>データサイズ</strong>/<strong>先頭行</strong>/<strong>基本情報</strong>/<strong>基本統計量</strong>/<strong>基本統計量</strong>/<strong>欠損値</strong>が表示されます</li>
+          </ol>
+        </div>
+        <div class="input-file">
+          <form action="{{ url_for('getInfo') }}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <label class="font-weight-bold" for="csv-file">CSVファイルの指定</label>
+              <input type="file" name="data" class="form-control" id="csv-file">
+              <small id="file-desc" class="form-text text-dark">CSVファイルを選択し、送信ボタンを押してください</small>
+            </div>
+            <button id="submit-btn" class="btn btn-primary btn-lg" type="submit" name="button">送信</button>
+          </form>
+        </div>
+      </div>
+      <div class="results">
+        {% block body %}
+        {% endblock %}
+      </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/graph.js" type="text/javascript"></script>
+  </body>
+</html>
